@@ -1,23 +1,17 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10'
-        }
-    }
+    agent any
 
     stages {
 
         stage('Build & Test') {
             steps {
-                sh 'pip install -r dvp-week12-app/requirements.txt'
-                sh 'pytest dvp-week12-app'
+                sh '''
+                python3 --version
+                pip3 install -r dvp-week12-app/requirements.txt
+                pytest dvp-week12-app
+                '''
             }
         }
 
-        stage('Docker Build') {
-            steps {
-                sh 'docker build -t dvp-app dvp-week12-app'
-            }
-        }
     }
 }
