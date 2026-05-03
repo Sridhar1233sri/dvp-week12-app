@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Build & Test') {
+            steps {
+                sh 'pip install -r dvp-week12-app/requirements.txt'
+                sh 'pytest dvp-week12-app'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t dvp-app dvp-week12-app'
+            }
+        }
+    }
+}
