@@ -11,7 +11,17 @@ pipeline {
             steps {
                 sh '''
                 python3 --version
-                pip3 install --user -r dvp-week12-app/requirements.txt
+
+                # Install pip if missing
+                python3 -m ensurepip || true
+
+                # Upgrade pip
+                python3 -m pip install --upgrade pip
+
+                # Install dependencies
+                python3 -m pip install --user -r dvp-week12-app/requirements.txt
+
+                # Run tests
                 python3 -m pytest dvp-week12-app
                 '''
             }
@@ -19,9 +29,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh '''
-                docker build -t $IMAGE_NAME dvp-week12-app
-                '''
+                sh 'docker build -t $IMAGE_NAME dvp-week12-app'
             }
         }
 
@@ -42,9 +50,7 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                sh '''
-                docker run -d -p 5000:5000 $IMAGE_NAME
-                '''
+                sh 'docker run -d -p 5000:5000 $IMAGE_NAME || true'
             }
         }
     }
