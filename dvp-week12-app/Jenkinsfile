@@ -12,14 +12,8 @@ pipeline {
                 sh '''
                 python3 --version
 
-                # Install pip if missing
-                python3 -m ensurepip || true
-
-                # Upgrade pip
-                python3 -m pip install --upgrade pip
-
-                # Install dependencies
-                python3 -m pip install --user -r dvp-week12-app/requirements.txt
+                # Install dependencies (ONLY this line matters)
+                python3 -m pip install --break-system-packages -r dvp-week12-app/requirements.txt
 
                 # Run tests
                 python3 -m pytest dvp-week12-app
