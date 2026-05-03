@@ -7,8 +7,8 @@ pipeline {
             steps {
                 sh '''
                 python3 --version
-                pip3 install -r dvp-week12-app/requirements.txt
-                pytest dvp-week12-app
+                pip3 install --user -r dvp-week12-app/requirements.txt
+                python3 -m pytest dvp-week12-app
                 '''
             }
         }
